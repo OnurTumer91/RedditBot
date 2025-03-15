@@ -5,8 +5,9 @@ from src.discord_manager import DiscordBot  # Import the DiscordBot Class
 
 # Initialize Discord client
 intents = discord.Intents.default()
-intents.messages = True
+intents.message_content = True  # Enable message content intent
+
 bot = DiscordBot(intents=intents)
 
 if __name__ == "__main__":
-    bot.run(DISCORD_TOKEN)
+    bot.run(DISCORD_TOKEN)  # Run the bot with the token
