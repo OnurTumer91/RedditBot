@@ -1,0 +1,15 @@
+# Ignore env variables
+.env
+
+# ignore virt env
+
+venv/
+
+# Ignore python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Docker files (prerequisite for Docker)
+*.log
+docker-compose.override.yml
