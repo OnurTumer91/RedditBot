@@ -1,5 +1,10 @@
 import discord
 from src.reddit_manager import fetch_top_post
+from prometheus_client import Counter
+
+#  Prometheus Metrics
+messages_received = Counter("discord_messages_received", "Number of messages received")
+commands_used = Counter("discord_commands_used", "Number of times commands are used")
 
 
 class DiscordBot(discord.Client):
@@ -8,10 +13,15 @@ class DiscordBot(discord.Client):
 
     async def on_message(self, message):
         if message.author == self.user:
-            return
+            return  # Ignore bot messages
+
+        messages_received.inc()  # Track total messages received
 
         if message.content.startswith("!reddit"):
             # Command format: !reddit [sort_method] [subreddit] f.eg !Reddit top technology
+
+            commands_used.inc()  # Track `!reddit` command usage
+
             parts = message.content.split(" ", 2)
             if len(parts) == 3:
                 sort_method = parts[1].lower()  # "top", "new", etc.
