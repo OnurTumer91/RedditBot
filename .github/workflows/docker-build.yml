@@ -34,4 +34,4 @@ jobs:
         with:
           context: .
           push: true  # Enable push to registry
-          tags: ghcr.io/${{ github.repository_owner }}/reddit-discord-bot:latest
+          tags: ghcr.io/${{ github.repository_owner }}.toLowerCase()/reddit-discord-bot:latest
