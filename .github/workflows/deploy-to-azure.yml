@@ -15,9 +15,9 @@ jobs:
       - name: Azure login  # Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}  # Credentials from Github secrets
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}  # Credentials from Github secrets
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  # Credentials from Github secrets
+          client-id: ${{ secrets.REDDITBOT_AZURE_CLIENT_ID}}  # Credentials from Github secrets
+          tenant-id: ${{ secrets.REDDITBOT_AZURE_SUBSCRIPTION_ID}}  # Credentials from Github secrets
+          subscription-id: ${{ secrets.REDDITBOT_AZURE_TENANT_ID}}  # Credentials from Github secrets
 
       - name: Github Container Registry login  # Setup docker and access the registry
         uses: docker/login-action@v2
