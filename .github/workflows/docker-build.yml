@@ -18,7 +18,7 @@ jobs:
       - name: Convert repository owner to lowercase
         run: echo "REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: Set up QEMU (for cross-platform builds, optional)
+      - name: Set up QEMU (for cross-platform builds)
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
