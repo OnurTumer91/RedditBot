@@ -45,3 +45,10 @@ jobs:
           containerAppEnvironment: managedEnvironment-redditbotcontai-b92c  # Azure container environment
           targetPort: 8000
           ingress: external  # Ingress turned on for external access
+
+      - name: Trigger container restart via environment variable update
+        run: |
+          az containerapp update \
+            --name redditbot \
+            --resource-group redditbot-container \
+            --set environmentVariables.FORCE_RESTART=$(date +%s)
