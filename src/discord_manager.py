@@ -57,7 +57,7 @@ class DiscordBot(discord.Client):
                     title=title,
                     url=url,
                     description=f"Top post from r/{subreddit} ({sort_method})\n{description}",
-                    color=0xFFFFFF,  # White color
+                    color=0x000000,  # Black color
                 )
 
                 # For non-GIF images, use thumbnail; for GIFs, we'll send separately.

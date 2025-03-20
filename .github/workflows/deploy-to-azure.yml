@@ -1,9 +1,10 @@
 name: Deploy to Azure
 
 on:
-  push:
-    branches:
-      - main  # When pushed to main branch
+    workflow_run:
+      workflows: ["Docker Build and Push"]
+      types:
+        - completed
 
 jobs:
   deploy:
