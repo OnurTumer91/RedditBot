@@ -34,7 +34,7 @@ jobs:
         with:
           containerAppName: redditbot
           resourceGroup: redditbot-container
-          imageToDeploy: ghcr.io/${{ github.repository_owner }}/redditbot:latest  # Image from GitHub registry
+          imageToDeploy: ghcr.io/${{ github.repository_owner | lower }}/redditbot:latest  # Image from GitHub registry
           registryUrl: ghcr.io  # GitHub registry URL
           registryUsername: ${{ github.repository_owner }}
           registryPassword: ${{ secrets.GHCR_TOKEN }}  # Token
