@@ -1,0 +1,48 @@
+name: Trigger auto deployment for redditbot
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/redditbot-AutoDeployTrigger-826a873d-4c7c-46e7-bed5-27621d78d1d2.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.REDDITBOT_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.REDDITBOT_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.REDDITBOT_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }},
+          _dockerfilePathKey_: _dockerfilePath_
+          registryUrl: ghcr.io
+          registryUsername: ${{ secrets.REDDITBOT_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.REDDITBOT_REGISTRY_PASSWORD }}
+          containerAppName: redditbot
+          resourceGroup: redditbot-container
+          imageToBuild: ghcr.io/redditbot:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
