@@ -1,0 +1,41 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+        - main # When pushed to main branch
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            -name: Checkout code # Checkout the code
+             uses: actions/checkout@v2
+
+            -name: Azure login # Login to Azure
+             uses: azure/login@v1
+             with:
+                client-id: ${{ secrets.AZURE_CLIENT_ID }} # Credentials from Github secrets
+                tenant-id: ${{ secrets.AZURE_TENANT_ID }} # Credentials from Github secrets
+                subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} # Credentials from Github secrets
+
+            -name: Github Container Registry logion # Setup docker and access the registry
+             uses: docker/login-action@v2
+             with:
+                registry: ghcr.io
+                username: ${{ github.repository_owner }}
+                password: ${{ secrets.GHCR_TOKEN }} # Credentials from Github secres
+
+            -name: Desplot to Azure container Apps # Dploy the container into the Azure environment
+             uses: azure/container-apps-deploy-action@v2
+             with:
+                containerAppName: redditbot
+                resourceGroup: redditbot-container
+                imageToDeploy: ghcr.io/${{ github.repository_owner }}/redditbot:latest  # img from Github registry
+                registryUrl: ghcr.io  # GitHub registry URL
+                registryUsername: ${{ github.repository_owner }}
+                registryPassword: ${{ secrets.GHCR_TOKEN }}  # Token
+                containerAppEnvironment: managedEnvironment-redditbotcontai-b92c  # azure container environment
+                targetPort: 8000
+                ingress: external  # ingress turned on for external access
+
