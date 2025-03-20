@@ -125,7 +125,7 @@
   ```
 - Or manually:
   ```bash
-  python -m src/app.py
+  python -m src.bot
   ```
 ---
 ### 🌟 Contribution
