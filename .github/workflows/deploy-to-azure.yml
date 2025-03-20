@@ -30,7 +30,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ env.REPO_OWNER }}  # Use lowercase value from env
-          password: ${{ secrets.GHCR_TOKEN }}  # Credentials from GitHub secrets
+          password: ${{secrets.GHCR_TOKEN}}  # Credentials from GitHub secrets
 
       - name: Deploy to Azure container Apps  # Deploy the container into the Azure environment
         uses: azure/container-apps-deploy-action@v2
